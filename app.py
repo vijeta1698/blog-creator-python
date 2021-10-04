@@ -199,8 +199,9 @@ def update():
         content = request.args.get('content')
         obj = connection()
         obj.update(title,subtitle,author,content,id)
-        #return "{\"result\':\"OK\"}"
         logger.info('updated successfully')
+        return "{\"result\':\"OK\"}"
+        
         return redirect(url_for('add'))
     except Exception as e:
         logger.error(str(e))
