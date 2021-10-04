@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect,session
 from connection import connection
-#from flask_session import Session
+from flask_session import Session
 import re
 import random
 import smtplib
@@ -9,7 +9,7 @@ from log_class import getLog,StreamHandler
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-#Session(app)
+Session(app)
 
 logger = getLog('blog.py')
 StreamHandler(logger)
@@ -150,6 +150,7 @@ def login():
             return render_template('login.html', myErrorMsg=login_error)
     except Exception as e:
         logger.error('log in error'+str(e))
+        render_template('error.html')
         #raise Exception(str(e))
 
 
