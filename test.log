@@ -1,0 +1,8 @@
+2021-10-04 13:13:58,690:INFO:blog.py:site opened successfully
+2021-10-04 13:18:40,258:ERROR:blog.py:Error type object 'Session' has no attribute 'get'
+2021-10-04 13:20:10,865:INFO:blog.py:site opened successfully
+2021-10-04 13:26:57,558:INFO:blog.py:site opened successfully
+2021-10-04 13:28:14,698:INFO:blog.py:useer added successfully
+2021-10-04 13:28:54,132:INFO:blog.py:in login
+2021-10-04 13:28:56,488:INFO:blog.py:User logged in
+2021-10-04 13:28:58,422:INFO:blog.py:site opened successfully
