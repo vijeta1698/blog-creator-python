@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>VBLOG</title>
+    <script src="https://cdn.tiny.cloud/1/ndlvcxw8929sueye51xkkqbrfc4w71jptdvw1r8p2xyyb6ql/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({selector:'textarea'});</script>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="{{ url_for('static', filename='font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script src="{{ url_for('static', filename='request.js') }}"></script>
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='clean-blog.min.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script>
+      function deleteBlog(id){
+         var isok = confirm('Are you sure ?');
+         if(isok){
+            $.ajax({
+                type:"GET",
+                url: '{{url_for('delete')}}',
+                data: { bid : id},
+                datatyoe:'text',
+                success: function (result) {
+                    var Response = JSON.parse(result);
+                    //console.log(result);
+                    //console.log(Response);
+                    alert(Response["Result"]);
+                    window.location.href = "{{ url_for('add') }}";
+                }
+          });
+         }
+        }
+        function getBlog(id){
+            $.ajax({
+                type:"GET",
+                url: '{{url_for('getBlog')}}',
+                data: { bid : id},
+                datatyoe:'text',
+                success: function (result) {
+                    document.getElementById('title').value = result["title"];
+                    document.getElementById('subtitle').value = result["subtitle"];
+                    document.getElementById('author').value = result["author"];
+                    document.getElementById('bid').value = result["id"];
+                    tinyMCE.activeEditor.setContent(result["content"]);
+                    document.getElementById('sendMessageButton').style.display = "none";
+                    document.getElementById('btnUpdate').style.display = "block";
+                    document.getElementById('btnAddCancel').style.display = "block";
+                }
+          });
+        }
+
+        function updateBlog(){
+          var letsGo = confirm('Update Blog ?');
+          if(letsGo){
+            var txtTitle = document.getElementById('title').value;
+            var txtSubtitle = document.getElementById('subtitle').value;
+            var txtAuthor = document.getElementById('author').value;
+            var txtContent = tinyMCE.activeEditor.getContent();
+            if(txtTitle.trim() == "" || txtSubtitle.trim() == "" || txtAuthor.trim() == "" || txtContent.trim() == ""){
+              alert("All fields are required");
+            }
+            else{
+            did = document.getElementById('bid').value;
+            dtitle = document.getElementById('title').value;
+            dsubtitle = document.getElementById('subtitle').value;
+            dauthor = document.getElementById('author').value;
+            dcontent = tinyMCE.activeEditor.getContent();
+            $.ajax({
+                type:"GET",
+                url: '{{url_for('update')}}',
+                data: { bid : did, title:dtitle,subtitle:dsubtitle,author:dauthor,content:dcontent},
+                datatyoe:'text',
+                success: function(response) {
+                  window.location.href = "{{ url_for('add') }}";
+                }
+            });
+            }
+          }
+        }
+        function validateFeilds(event){
+            var txtTitle = document.getElementById('title').value;
+            var txtSubtitle = document.getElementById('subtitle').value;
+            var txtAuthor = document.getElementById('author').value;
+            var txtContent = tinyMCE.activeEditor.getContent();
+            if(txtTitle.trim() == "" || txtSubtitle.trim() == "" || txtAuthor.trim() == "" || txtContent.trim() == ""){
+              alert("All feilds are required.");
+              event.preventDefault();
+            }
+        }
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">VBLOG</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('about') }}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('add') }}">Add</a>
+            </li>
+            {% if loggedUser|length %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('loadLogin')}}">Login</a>
+                </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+   <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <p class="copyright text-muted">Copyright &copy; Your Website 2021</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{{ url_for('static', filename='clean-blog.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url_for('static',filename='request.js') }}">
+
+    </script>
+  </body>
+</html>
