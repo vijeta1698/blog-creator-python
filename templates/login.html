@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BlogCreator - Login</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+	body {
+		background-color: #f7f7f7;
+		margin: 0;
+		padding: 0;
+		text-decoration: none;
+	}
+	
+	.mainContainer {
+		background-color: white !important;
+		border-radius: 10px;
+		margin-top: 100px;
+		padding: 50px;
+        max-width: 990px;
+	}
+	
+	.loginContHeading {
+		font-weight: bold;
+        margin-bottom: 10px;
+	}
+	.input-group-text, .form-control{
+        border: none;
+        border-radius: 0;
+    }
+	.cusomTxtboxCS{
+        margin-bottom: 10px;
+        border: 1px solid rgb(184, 184, 184);
+        border-radius: 0.25rem;
+        width: 100% !important;
+    }
+    .submitBtnCont{
+        text-align: right;display: block;
+    }
+    #btnsignup{
+        padding: 5px 20px;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+    .loginLeftCont{
+        text-align: center;
+    }
+    .loginSvgCont{
+        width: 100%;
+    }
+    .loginSvgCont>img{
+        margin: auto;
+    }
+    p{
+        width: 100%;
+        margin-top: 20px;
+    }
+    @media(max-width:500px){
+        .mainContainer{
+            padding: 50px;
+            height: 100%;
+            margin: 0;
+        }
+        .loginSvgCont>img{
+            width: 100%;
+        }
+        .col-md-12,.col-md-4,.col-md-6,.col-md-7,.col-md-5{
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .loginSvgCont{
+            display: initial !important;
+        }
+    }
+	</style>
+</head>
+
+<body>
+	<div class="container mainContainer">
+		<div class="row col-md-12">
+			<div class="col-md-7 loginLeftCont">
+				<div class="row loginSvgCont"> <img src="{{url_for('static', filename='login.svg')}}"> </div>
+			</div>
+			<div class="col-md-5">
+				<div class="signupContainer">
+                    <form  name="UserForm" id="UserForm" method="POST" action="{{ url_for('login') }}" novalidate>
+                        <div class="signInForm">
+                            <h1 class="loginContHeading">Sign In</h1>
+                            <div class="input-group w-50 cusomTxtboxCS"> 
+                                <span class="input-group-text" id="basic-addon1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                                    </svg>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Username" id="txtUsername" name="loginUname" aria-label="Input group example" aria-describedby="basic-addon1">
+                            </div>
+        
+                            <div class="input-group w-50 cusomTxtboxCS"> 
+                                <span class="input-group-text" id="basic-addon2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                        <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"></path>
+                                        <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </svg>
+                                </span>
+                                <input type="password" class="form-control" name="loginUPass" id="txtPass" placeholder="Password" aria-label="Input group example" aria-describedby="basic-addon1">
+                            </div>
+        
+                            <p id="errMsg" style="color: red;">{{ myErrorMsg }}</p>
+                            <div class="input-group submitBtnCont">
+                                <button type="submit" name="btnName" id="btnsignin" value="btnsignIn" class="btn-success">Sign In</button>
+                            </div>
+                            <p style="text-align: center;">
+                                <a class="showsignUp" href="{{ url_for('loadSignup') }}">Not having account? Create one</a><br>
+                                <a class="showsignUp" href="{{ url_for('loadForgetPassword') }}">Forget password ?</a>
+                            </p>
+                        </div>
+                    </form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+ {% if Password|length %}
+        <script>
+            document.getElementById("txtPass").value = "{{ Password }}";
+        </script>
+    {% endif %}
+ {% if username|length %}
+        <script>
+            document.getElementById("txtUsername").value = "{{ username }}";
+        </script>
+    {% endif %}
+</body>
+
+</html>

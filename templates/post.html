@@ -1,0 +1,64 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <style>
+        .ShareBtnDes{
+            display: block;
+            width: 100px;
+            margin-top: 30px;
+            background: #d9d9d9;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            font-family: Arial;
+        }
+    </style>
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('{{ url_for('static', filename='blog-bg.jpg') }}')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1>{{ post[2] }}</h1>
+              <h2 class="subheading">{{ post[3] }}</h2>
+              <span class="meta">Posted by
+                {{ post[1] }}
+                on {{ post[5]}}</span>
+              <span  style=""class="shareBtn">
+
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            {{ post[4]|safe }}
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <hr>
+
+
+    <script>
+    window.addEventListener('load', (event) => {
+        var blogUrl = this.window.location.href;
+        document.querySelector('.shareBtn').innerHTML = "<a onclick=\"copyShareLink()\" class=\"ShareBtnDes\" href=\"#\">SHARE</a>";
+    });
+
+    function copyShareLink(){
+      navigator.clipboard.writeText(this.window.location.href);
+      alert('Link Copied');
+    };
+</script>
+{% endblock %}
