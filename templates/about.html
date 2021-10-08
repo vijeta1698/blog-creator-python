@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('{{ url_for('static', filename='ml.png') }}')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>About Us</h1>
+              <span class="subheading">This is what we do.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>The "VBlog" site has been designed and developed by Vijeyeta Sharma and Mohd. Aman. The Project is a part of internship provided by <a href = "https://ineuron.ai/">ineuron.ai</a></p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    {% endblock %}

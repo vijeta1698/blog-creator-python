@@ -1,0 +1,97 @@
+
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('{{ url_for('static', filename='contact-bg.jpg') }}')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>Add Post</h1>
+              <span class="subheading">You can create a blog post here.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <form name="addForm" id="addForm" method="POST" action="{{ url_for('addpost') }}" novalidate>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Title</label>
+                <input onchange="checkTitle()" type="text" class="form-control" placeholder="Title" name="title" id="title" required data-validation-required-message="Please enter a title.">
+
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Subtitle</label>
+                <input type="text" class="form-control" placeholder="Subtitle" name="subtitle" id="subtitle" required data-validation-required-message="Please enter your email address.">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Author</label>
+                <input type="text" class="form-control" placeholder="Author" name="author" id="author" required data-validation-required-message="Please enter your phone number.">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Blog Content</label>
+                <textarea rows="5" class="form-control" placeholder="Blog content" name="content" id="content" required data-validation-required-message="Please enter a message."></textarea>
+              </div>
+            </div>
+            <br>
+           <input type="hidden" id="bid" name="BlogId" value="">
+            <div id="success"></div>
+            <div class="form-group">
+                <button onclick="validateFeilds(event)" type="submit" class="btn btn-secondary" id="sendMessageButton">Send</button>
+            </div>
+          </form>
+        <div class="">
+                <button style="display:none;" class="btn btn-primary" onclick="updateBlog();" id="btnUpdate">Update</button><br>
+                <a style="display:none; width:120px;"  href="{{ url_for('add') }}" class="btn btn-danger" id="btnAddCancel">Cancel</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+  <div class="container">
+      <h2>Your Blogs</h2>
+      <hr>
+        <table id="table_id" class="display">
+            <thead>
+                <tr>
+                    <th style="width: 5%">Id</th>
+                    <th style="width:10%">Title</th>
+                    <th style="width:10%">Subtitle</th>
+                    <th style="width:10%">Author</th>
+                    <th style="width:55%">Description</th>
+                    <th style="width:10%">Edit</th>
+                    <th style="width:10%">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="BlogData">
+            {% for i in data %}
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[2]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[4]|safe}}</td>
+                    <td><button class="form-control btn-success" style="margin: 5px;" onclick="getBlog({{i[0]}});" >EDIT</button> </td>
+                    <td><button class="form-control btn-danger" style="margin: 5px;" onclick="deleteBlog({{i[0]}});" >DELETE</button> </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
